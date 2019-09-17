@@ -1,0 +1,5 @@
+/* @import './index.scss'; */
+@import './test.css';
+body {
+  background: #ccc;
+}
