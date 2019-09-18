@@ -3,8 +3,16 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   devServer: {
-    port: 3000,
-    compress: true, // 开启gzip
-    contentBase: path.resolve(__dirname, '../dist') // 更改静态文件目录位置
+    publicPath: '/',
+    clientLogLevel: 'warning',
+    inline: true,
+    hot: true,
+    compress: true,
+    port: '3000',
+    open: false,
+    overlay: false,
+    contentBase: false,
+    quiet: true, // necessary for FriendlyErrorsPlugin
   }
+  
 }
