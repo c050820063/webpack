@@ -1,3 +1,3 @@
 import './index.css';
-const a = require('./moduleA');
-console.log(a)
+const add = require('./moduleA');
+console.log(add(1, 2))

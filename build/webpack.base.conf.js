@@ -24,6 +24,10 @@ module.exports = (env) => {
     module: {
       rules: [
         {
+          test: /\.js$/,
+          use: 'babel-loader'
+        },
+        {
           test: /\.(eot|woff|ttf|otf)$/,
           use: 'file-loader'
         },
