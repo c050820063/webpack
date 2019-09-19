@@ -8,7 +8,7 @@ module.exports = {
     inline: true,
     hot: true,
     compress: true,
-    port: '3000',
+    port: '3001',
     open: false,
     overlay: false,
     contentBase: false,

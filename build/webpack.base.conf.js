@@ -2,6 +2,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const dev = require('./webpack.dev.conf');
 const prod = require('./webpack.prod.conf');
 
@@ -9,7 +10,6 @@ const resolve = (dir) => {
   return path.resolve(__dirname, '..', dir)
 }
 const assetsPath = (_path) => {
-
   return path.posix.join('static', _path)
 }
 
@@ -17,6 +17,8 @@ module.exports = (env) => {
   const isDev = env === 'development'
   console.log(isDev)
   const base = {
+    // source
+    devtool:isDev ? 'cheap-module-eval-source-map' : false,
     // 入口
     entry: resolve('src/index.js'),
     // 出口
@@ -25,8 +27,18 @@ module.exports = (env) => {
       filename: assetsPath('js/[name].[hash:8].js'),
       // publicPath: '/'
     },
+    // extensions 自动添加后缀名
+    resolve: {
+      extensions: ['.vue', '.js', '.jsx', '.json', '.ts', '.tsx']
+    },
+    // loader
     module: {
       rules: [
+        {
+          test: /\.js$/,
+          enforce: 'pre',
+          use: 'eslint-loader'
+        },
         {
           test: /\.js$/,
           use: 'babel-loader'
@@ -69,6 +81,12 @@ module.exports = (env) => {
     },
     // 插件
     plugins: [
+      new CopyWebpackPlugin([
+        {
+          from: resolve('src/static'),
+          to: 'static'
+        }
+      ]),
       !isDev && new MiniCssExtractPlugin({
         filename: assetsPath('css/[name].[hash:8].css'),
         allChunks: true,
