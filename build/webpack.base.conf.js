@@ -8,6 +8,10 @@ const prod = require('./webpack.prod.conf');
 const resolve = (dir) => {
   return path.resolve(__dirname, '..', dir)
 }
+const assetsPath = (_path) => {
+
+  return path.posix.join('static', _path)
+}
 
 module.exports = (env) => {
   const isDev = env === 'development'
@@ -18,8 +22,8 @@ module.exports = (env) => {
     // 出口
     output: {
       path: resolve('dist'),
-      filename: '[name].js',
-      publicPath: '/'
+      filename: assetsPath('js/[name].[hash:8].js'),
+      // publicPath: '/'
     },
     module: {
       rules: [
@@ -37,8 +41,7 @@ module.exports = (env) => {
             loader: 'url-loader',
             options: {
               limit: 10 * 1024,
-              name: '[hash:8].[ext]',
-              outputPath: 'img'
+              name: assetsPath('img/[hash:8].[ext]'),
             }
           }
         },
@@ -49,7 +52,7 @@ module.exports = (env) => {
               loader: MiniCssExtractPlugin.loader,
               options: {
                 hmr: isDev,
-                publicPath: '../'
+                // publicPath: '../'
               }
             } : 'style-loader',
             {
@@ -67,7 +70,8 @@ module.exports = (env) => {
     // 插件
     plugins: [
       !isDev && new MiniCssExtractPlugin({
-        filename: 'css/[name].[hash:8].css'
+        filename: assetsPath('css/[name].[hash:8].css'),
+        allChunks: true,
       }),
       new HtmlWebpackPlugin({
         template: resolve('public/index.html'),

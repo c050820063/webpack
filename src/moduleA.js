@@ -14,5 +14,5 @@ class A {
     this.a = 1
   }
 }
-
-module.exports = add
+// module.exports = add
+export default add
