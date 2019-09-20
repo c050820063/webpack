@@ -82,8 +82,8 @@ module.exports = (env) => {
                 importLoaders: 2 // 引入的文件需要调用sass-loader来处理 
               }
             },
-            // 'postcss-loader',
-            // 'sass-loader'
+            'postcss-loader',
+            'sass-loader'
           ]
         },
         // {
@@ -100,7 +100,8 @@ module.exports = (env) => {
         allChunks: true,
       }),
       !isDev && new PurgecssWebpackPlugin({
-        paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true })
+        paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true }),
+        whitelist: ['body']
       }),
       new CopyWebpackPlugin([
         {

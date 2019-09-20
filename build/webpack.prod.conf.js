@@ -9,8 +9,8 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      // new TerserJSPlugin(),
-      // new OptimizeCSSAssetsPlugin()
+      new TerserJSPlugin(),
+      new OptimizeCSSAssetsPlugin()
     ],
     splitChunks: {
       cacheGroups: {
@@ -26,6 +26,12 @@ module.exports = {
           chunks: 'async',
           minChunks: 3,
         },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
       },
     },
   },
