@@ -5,6 +5,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     publicPath: '/',
+    // contentBase: path.resolve(__dirname),
     clientLogLevel: 'warning',
     inline: true,
     hot: true,

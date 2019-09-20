@@ -3,6 +3,8 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PurgecssWebpackPlugin = require('purgecss-webpack-plugin');
+const glob = require('glob');
 const dev = require('./webpack.dev.conf');
 const prod = require('./webpack.prod.conf');
 
@@ -18,14 +20,14 @@ module.exports = (env) => {
   console.log(isDev)
   const base = {
     // source
-    devtool:isDev ? 'cheap-module-eval-source-map' : false,
+    // devtool:isDev ? 'cheap-module-eval-source-map' : false,
     // 入口
-    entry: resolve('src/index.tsx'),
+    entry: resolve('src/index.jsx'),
     // 出口
     output: {
       path: resolve('dist'),
+      // filename: 'js/[name].[hash:8].js',
       filename: assetsPath('js/[name].[hash:8].js'),
-      // publicPath: '/'
     },
     // extensions 自动添加后缀名
     resolve: {
@@ -59,6 +61,7 @@ module.exports = (env) => {
             loader: 'url-loader',
             options: {
               limit: 10 * 1024,
+              // name: 'img/[hash:8].[ext]',
               name: assetsPath('img/[hash:8].[ext]'),
             }
           }
@@ -79,24 +82,32 @@ module.exports = (env) => {
                 importLoaders: 2 // 引入的文件需要调用sass-loader来处理 
               }
             },
-            'postcss-loader',
-            'sass-loader'
+            // 'postcss-loader',
+            // 'sass-loader'
           ]
-        }
-      ]
+        },
+        // {
+        //   test: /\.(html|tpl)$/,
+        //   loader: 'html-loader',
+        // },
+      ].filter(Boolean)
     },
     // 插件
     plugins: [
+      !isDev && new MiniCssExtractPlugin({
+        // filename: 'css/[name].[hash:8].css',
+        filename: assetsPath('css/[name].[hash:8].css'),
+        allChunks: true,
+      }),
+      !isDev && new PurgecssWebpackPlugin({
+        paths: glob.sync(`${resolve('src')}/**/*`, { nodir: true })
+      }),
       new CopyWebpackPlugin([
         {
           from: resolve('src/static'),
           to: 'static'
         }
       ]),
-      !isDev && new MiniCssExtractPlugin({
-        filename: assetsPath('css/[name].[hash:8].css'),
-        allChunks: true,
-      }),
       new HtmlWebpackPlugin({
         template: resolve('public/index.html'),
         filename: 'index.html', // 打包出来的文件名

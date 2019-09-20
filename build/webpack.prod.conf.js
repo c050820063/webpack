@@ -4,8 +4,14 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   mode: 'production',
+  output: {
+    publicPath: '/dist/'
+  },
   optimization: {
-    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
+    minimizer: [
+      // new TerserJSPlugin(),
+      // new OptimizeCSSAssetsPlugin()
+    ],
     splitChunks: {
       cacheGroups: {
         vendor: {
