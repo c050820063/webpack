@@ -3,13 +3,22 @@
     ["@babel/preset-env", {
       "useBuiltIns": "usage", // 按需加载
       "corejs": 2 // 替代polifill
-    }]
+    }],
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+    // ["@babel/preset-typescript", { // 这个报错
+    //   "allExtensions": true
+    // }]
   ],
   "sourceType": "unambiguous", // sourceType: 表明代码应该解析的模式。可以是 "script"，"module" 或者 "unambiguous" 中任意一个。默认为 “script”。"unambiguous"将使得Babylon 尝试根据ES6的import 或者export 声明来进行推测。具有 ES6 import和export 的文件被认为是 "module"，否则被认为是 "script"。 https://blog.csdn.net/m0_37686205/article/details/99580526default
   "plugins": [
     // legacy:true表示继续使用装饰器装饰器，loose为false时会采用Object.defineProperty定义属性
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-decorators", {
+      "legacy": true
+    }],
+    ["@babel/plugin-proposal-class-properties", {
+      "loose": true
+    }],
     "@babel/plugin-transform-runtime"
   ]
 }

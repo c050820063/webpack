@@ -20,7 +20,7 @@ module.exports = (env) => {
     // source
     devtool:isDev ? 'cheap-module-eval-source-map' : false,
     // 入口
-    entry: resolve('src/index.js'),
+    entry: resolve('src/index.tsx'),
     // 出口
     output: {
       path: resolve('dist'),
@@ -34,14 +34,20 @@ module.exports = (env) => {
     // loader
     module: {
       rules: [
-        {
+        // {
+        //   test: /\.(tsx?)$/,
+        //   use: 'ts-loader',
+        //   exclude: /node_modules/
+        // },
+        isDev && {
           test: /\.js$/,
           enforce: 'pre',
           use: 'eslint-loader'
         },
         {
-          test: /\.js$/,
-          use: 'babel-loader'
+          test: /\.(j|t)sx?$/,
+          use: 'babel-loader',
+          exclude: /node_modules/
         },
         {
           test: /\.(eot|woff|ttf|otf)$/,

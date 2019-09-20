@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -13,6 +14,9 @@ module.exports = {
     overlay: false,
     contentBase: false,
     quiet: true, // necessary for FriendlyErrorsPlugin
-  }
-  
+  },
+  plugins: [
+    // 热更新，热更新不是刷新
+    new webpack.HotModuleReplacementPlugin()
+  ],
 }
