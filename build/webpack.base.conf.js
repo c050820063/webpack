@@ -57,14 +57,40 @@ module.exports = (env) => {
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/,
-          use: {
-            loader: 'url-loader',
-            options: {
-              limit: 10 * 1024,
-              // name: 'img/[hash:8].[ext]',
-              name: assetsPath('img/[hash:8].[ext]'),
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 10 * 1024,
+                // name: 'img/[hash:8].[ext]',
+                name: assetsPath('img/[hash:8].[ext]'),
+              }
+            },
+            !isDev && {
+              loader: "image-webpack-loader",
+              options: {
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65
+                },
+                // optipng.enabled: false will disable optipng
+                optipng: {
+                  enabled: false,
+                },
+                pngquant: {
+                  quality: [0.90, 0.95],
+                  speed: 4
+                },
+                gifsicle: {
+                  interlaced: false,
+                },
+                // the webp option will enable WEBP
+                webp: {
+                  quality: 75
+                }
+              }
             }
-          }
+          ].filter(Boolean)
         },
         {
           test: /\.(c|sc|sa)ss$/,
