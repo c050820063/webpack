@@ -31,4 +31,5 @@ ReactDOM.render(
     <Item />
     <img src={require('./bg.jpg')} alt="" />
   </div>,
-  document.getElementById('root'))
+  document.getElementById('root')
+)

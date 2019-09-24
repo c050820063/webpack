@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --progress --env development --config ./build/webpack.base.conf",
     "dev:build": "webpack --env development --config ./build/webpack.base.conf",
-    "build": "webpack --env production --config ./build/webpack.base.conf"
+    "build": "webpack --env production --config ./build/webpack.base.conf",
+    "dll": "webpack --config ./webpack.dll"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "@babel/runtime": "^7.6.0",
     "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
+    "add-asset-html-webpack-plugin": "^3.1.3",
     "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
